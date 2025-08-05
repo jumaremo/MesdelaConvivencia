@@ -342,6 +342,7 @@
                     <option value="Sandra">Sandra</option>
                     <option value="Shirley">Shirley</option>
                     <option value="Leonardo">Leonardo</option>
+                    <option value="Yira">Yira</option>
                     <option value="Daidiana">Daidiana</option>
                     <option value="Personaje ARL">Personaje ARL</option>
                     <option value="CoCoLab">CoCoLab</option>
@@ -375,11 +376,11 @@
                     
                     <div class="activity-card" data-city="Virtual" data-responsible="Juan Ma">
                         <div class="activity-date">2 de Septiembre</div>
-                        <div class="activity-title">🎭 Tips de Comunicación Asertiva</div>
+                        <div class="activity-title">🎭 Taller de Comunicación Asertiva</div>
                         <div class="activity-objective">Desarrollar habilidades de comunicación efectiva para mejorar las relaciones interpersonales</div>
                         <div class="activity-details">
                             <span class="detail-badge">Facilitador interno</span>
-                            <span class="detail-badge">Video</span>
+                            <span class="detail-badge">1 hora</span>
                             <span class="detail-badge">Acompañamiento Psicóloga ARL</span>
                         </div>
                         <div class="responsible-badge">👤 Juan Ma</div>
@@ -557,6 +558,32 @@
                         <div class="city-badge">Barranquilla</div>
                     </div>
                     
+                    <div class="activity-card" data-city="Virtual" data-responsible="Yira">
+                        <div class="activity-date">15 de Septiembre</div>
+                        <div class="activity-title">🗣️ Café con Líderes: Diálogo Abierto</div>
+                        <div class="activity-objective">Crear espacios de diálogo directo entre líderes y equipos</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Conversación informal</span>
+                            <span class="detail-badge">Feedback bidireccional</span>
+                        </div>
+                        <div class="responsible-badge">👤 Yira</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Virtual" data-responsible="Shirley">
+                        <div class="activity-date">16 de Septiembre</div>
+                        <div class="activity-title">📝 Taller de Feedback Constructivo</div>
+                        <div class="activity-objective">Desarrollar habilidades para dar y recibir retroalimentación efectiva</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Técnicas prácticas</span>
+                            <span class="detail-badge">Role playing</span>
+                            <span class="detail-badge">1 hora</span>
+                            <span class="detail-badge">Acompañamiento Psicóloga ARL</span>
+                        </div>
+                        <div class="responsible-badge">👤 Shirley</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                    
                     <div class="activity-card" data-city="Cartagena" data-responsible="Personaje ARL">
                         <div class="activity-date">17 de Septiembre</div>
                         <div class="activity-title">👨‍🚀 Dinámica Presencial - Cartagena</div>
@@ -578,22 +605,24 @@
                             <span class="detail-badge">Gamificación</span>
                             <span class="detail-badge">Equipos mixtos</span>
                             <span class="detail-badge">1 hora</span>
+                            <span class="detail-badge">Acompañamiento Psicóloga ARL</span>
                         </div>
                         <div class="responsible-badge">👤 Leonardo</div>
                         <div class="city-badge">Virtual</div>
                     </div>
                     
-                    <div class="activity-card" data-city="Virtual" data-responsible="Shirley">
+                    <div class="activity-card" data-city="Virtual" data-responsible="Daidiana, Juan Ma, Laura">
                         <div class="activity-date">18 de Septiembre</div>
-                        <div class="activity-title">📝 Taller de Feedback Constructivo</div>
-                        <div class="activity-objective">Desarrollar habilidades para dar y recibir retroalimentación efectiva</div>
+                        <div class="activity-title">🎪 Festival de Talentos</div>
+                        <div class="activity-objective">Conocer y valorar los talentos diversos de los colaboradores</div>
                         <div class="activity-details">
-                            <span class="detail-badge">Técnicas prácticas</span>
-                            <span class="detail-badge">Role playing</span>
+                            <span class="detail-badge">Presentaciones voluntarias</span>
+                            <span class="detail-badge">Reconocimiento</span>
                             <span class="detail-badge">1 hora</span>
-                            <span class="detail-badge">Acompañamiento Psicóloga ARL</span>
                         </div>
-                        <div class="responsible-badge">👤 Shirley</div>
+                        <div class="responsible-badge">👤 Daidiana</div>
+                        <div class="responsible-badge">👤 Juan Ma</div>
+                        <div class="responsible-badge">👤 Laura</div>
                         <div class="city-badge">Virtual</div>
                     </div>
                     
@@ -608,6 +637,18 @@
                         </div>
                         <div class="responsible-badge">👤 Personaje ARL</div>
                         <div class="city-badge">Pereira</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Todas las Ciudades y Virtual" data-responsible="CoCoLab">
+                        <div class="activity-date">19 de Septiembre</div>
+                        <div class="activity-title">📊 Pulso Mes de la Convivencia</div>
+                        <div class="activity-objective">Medir el impacto de las actividades y identificar áreas de mejora</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Evaluación online</span>
+                            <span class="detail-badge">Participación anónima</span>
+                        </div>
+                        <div class="responsible-badge">👤 CoCoLab</div>
+                        <div class="city-badge">Todas las Ciudades y Virtual</div>
                     </div>
                 </div>
             </div>
@@ -666,21 +707,6 @@
                         <div class="city-badge">Virtual</div>
                     </div>
                     
-                    <div class="activity-card" data-city="Virtual" data-responsible="Daidiana, Juan Ma, Laura">
-                        <div class="activity-date">25 de Septiembre</div>
-                        <div class="activity-title">🎪 Festival de Talentos</div>
-                        <div class="activity-objective">Conocer y valorar los talentos diversos de los colaboradores</div>
-                        <div class="activity-details">
-                            <span class="detail-badge">Presentaciones voluntarias</span>
-                            <span class="detail-badge">Reconocimiento</span>
-                            <span class="detail-badge">1 hora</span>
-                        </div>
-                        <div class="responsible-badge">👤 Daidiana</div>
-                        <div class="responsible-badge">👤 Juan Ma</div>
-                        <div class="responsible-badge">👤 Laura</div>
-                        <div class="city-badge">Virtual</div>
-                    </div>
-                    
                     <div class="activity-card" data-city="Virtual" data-responsible="Comité de Convivencia">
                         <div class="activity-date">26 de Septiembre</div>
                         <div class="activity-title">🎊 Encuentro Virtual de Convivencia - Área 5</div>
@@ -691,18 +717,6 @@
                         </div>
                         <div class="responsible-badge">👤 Comité de Convivencia</div>
                         <div class="city-badge">Virtual</div>
-                    </div>
-                    
-                    <div class="activity-card" data-city="Todas las Ciudades y Virtual" data-responsible="CoCoLab">
-                        <div class="activity-date">26 de Septiembre</div>
-                        <div class="activity-title">📊 Pulso Mes de la Convivencia</div>
-                        <div class="activity-objective">Medir el impacto de las actividades y identificar áreas de mejora</div>
-                        <div class="activity-details">
-                            <span class="detail-badge">Evaluación online</span>
-                            <span class="detail-badge">Participación anónima</span>
-                        </div>
-                        <div class="responsible-badge">👤 CoCoLab</div>
-                        <div class="city-badge">Todas las Ciudades y Virtual</div>
                     </div>
                 </div>
             </div>
@@ -745,7 +759,7 @@
             <h2>📊 Estadísticas del Cronograma</h2>
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-number" id="totalActivities">27</div>
+                    <div class="stat-number" id="totalActivities">28</div>
                     <div class="stat-label">Total de Actividades</div>
                 </div>
                 <div class="stat-card">
@@ -753,7 +767,7 @@
                     <div class="stat-label">Ciudades Participantes</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number" id="totalResponsibles">13</div>
+                    <div class="stat-number" id="totalResponsibles">14</div>
                     <div class="stat-label">Responsables Asignados</div>
                 </div>
                 <div class="stat-card">
