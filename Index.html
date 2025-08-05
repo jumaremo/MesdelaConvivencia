@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronograma Mes de la Convivencia - Septiembre 2025</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.1) 10px,
+                rgba(255, 255, 255, 0.1) 20px
+            );
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .controls {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .filter-section {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-section label {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .filter-section select {
+            padding: 8px 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+
+        .filter-section select:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+        }
+
+        .export-btn {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(17, 153, 142, 0.4);
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(17, 153, 142, 0.6);
+        }
+
+        .timeline {
+            padding: 40px;
+        }
+
+        .week-section {
+            margin-bottom: 40px;
+        }
+
+        .week-header {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(250, 112, 154, 0.3);
+        }
+
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+
+        .activity-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid #4facfe;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+        }
+
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .activity-date {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .activity-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .activity-objective {
+            color: #495057;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .activity-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .detail-badge {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .responsible-badge {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            color: #8e24aa;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+
+        .city-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .stats-section {
+            background: linear-gradient(135deg, #2196f3 0%, #21cbf3 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-section {
+                justify-content: center;
+            }
+            
+            .activities-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤝 Mes de la Convivencia</h1>
+            <p>Cronograma de Actividades - Septiembre 2025</p>
+        </div>
+
+        <div class="controls">
+            <div class="filter-section">
+                <label for="cityFilter">Filtrar por ubicación:</label>
+                <select id="cityFilter">
+                    <option value="">Todas las Ciudades y Virtual</option>
+                    <option value="Todas las Ciudades y Virtual">Todas las Ciudades y Virtual</option>
+                    <option value="Virtual">Virtual</option>
+                    <option value="Bogotá">Bogotá</option>
+                    <option value="Medellín">Medellín</option>
+                    <option value="Cali">Cali</option>
+                    <option value="Barranquilla">Barranquilla</option>
+                    <option value="Cartagena">Cartagena</option>
+                    <option value="Pereira">Pereira</option>
+                </select>
+                
+                <label for="weekFilter">Filtrar por semana:</label>
+                <select id="weekFilter">
+                    <option value="">Todas las semanas</option>
+                    <option value="week1">Semana 1 (1-5 Sep)</option>
+                    <option value="week2">Semana 2 (8-12 Sep)</option>
+                    <option value="week3">Semana 3 (15-19 Sep)</option>
+                    <option value="week4">Semana 4 (22-26 Sep)</option>
+                    <option value="week5">Semana 5 (29-30 Sep)</option>
+                </select>
+
+                <label for="responsibleFilter">Filtrar por responsable:</label>
+                <select id="responsibleFilter">
+                    <option value="">Todos los responsables</option>
+                    <option value="Juan Ma">Juan Ma</option>
+                    <option value="Mariluz">Mariluz</option>
+                    <option value="Laura">Laura</option>
+                    <option value="Jose David">Jose David</option>
+                    <option value="Juan Camilo">Juan Camilo</option>
+                    <option value="Sandra">Sandra</option>
+                    <option value="Shirley">Shirley</option>
+                    <option value="Leonardo">Leonardo</option>
+                    <option value="Yira">Yira</option>
+                    <option value="Daidiana">Daidiana</option>
+                    <option value="Personaje ARL">Personaje ARL</option>
+                    <option value="CoCoLab">CoCoLab</option>
+                    <option value="Comunicaciones Internas">Comunicaciones Internas</option>
+                    <option value="Comité de Convivencia">Comité de Convivencia</option>
+                </select>
+            </div>
+            
+            <button class="export-btn" onclick="exportToExcel()">
+                📊 Exportar a Excel
+            </button>
+        </div>
+
+        <div class="timeline">
+            <!-- SEMANA 1 -->
+            <div class="week-section" data-week="week1">
+                <div class="week-header">
+                    Semana 1: Lanzamiento y Sensibilización (1-5 Septiembre)
+                </div>
+                <div class="activities-grid">
+                    <div class="activity-card" data-city="Todas las Ciudades y Virtual" data-responsible="Comunicaciones Internas">
+                        <div class="activity-date">1 de Septiembre</div>
+                        <div class="activity-title">🚀 Lanzamiento Oficial del Mes de la Convivencia</div>
+                        <div class="activity-objective">Presentar oficialmente el cronograma y generar expectativa en todos los colaboradores</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Comunicación masiva</span>
+                        </div>
+                        <div class="responsible-badge">👤 Comunicaciones Internas</div>
+                        <div class="city-badge">Todas las Ciudades y Virtual</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Virtual" data-responsible="Juan Ma">
+                        <div class="activity-date">2 de Septiembre</div>
+                        <div class="activity-title">🎭 Taller de Comunicación Asertiva</div>
+                        <div class="activity-objective">Desarrollar habilidades de comunicación efectiva para mejorar las relaciones interpersonales</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Facilitador interno</span>
+                            <span class="detail-badge">1 hora</span>
+                            <span class="detail-badge">Acompañamiento Psicóloga ARL</span>
+                        </div>
+                        <div class="responsible-badge">👤 Juan Ma</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Virtual" data-responsible="CoCoLab">
+                        <div class="activity-date">3 de Septiembre</div>
+                        <div class="activity-title">🎨 Mural Colaborativo "Nuestra Convivencia"</div>
+                        <div class="activity-objective">Crear un espacio artístico donde todos puedan expresar su visión de la convivencia</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Actividad creativa</span>
+                            <span class="detail-badge">Participación libre</span>
+                        </div>
+                        <div class="responsible-badge">👤 CoCoLab</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Virtual" data-responsible="Mariluz">
+                        <div class="activity-date">4 de Septiembre</div>
+                        <div class="activity-title">💻 Webinar "Inteligencia Emocional en el Trabajo"</div>
+                        <div class="activity-objective">Fortalecer competencias emocionales para mejorar el ambiente laboral</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Facilitador interno</span>
+                            <span class="detail-badge">1 hora</span>
+                            <span class="detail-badge">Acompañamiento Psicóloga ARL</span>
+                        </div>
+                        <div class="responsible-badge">👤 Mariluz</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Virtual" data-responsible="Laura">
+                        <div class="activity-date">5 de Septiembre</div>
+                        <div class="activity-title">🌱 Jornada de Bienestar y Mindfulness</div>
+                        <div class="activity-objective">Promover el bienestar mental y técnicas de relajación en el entorno laboral</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Instructor certificado</span>
+                            <span class="detail-badge">Actividad grupal</span>
+                        </div>
+                        <div class="responsible-badge">👤 Laura</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEMANA 2 -->
+            <div class="week-section" data-week="week2">
+                <div class="week-header">
+                    Semana 2: Fortalecimiento del Trabajo en Equipo (8-12 Septiembre)
+                </div>
+                <div class="activities-grid">
+                    <div class="activity-card" data-city="Bogotá" data-responsible="Personaje ARL">
+                        <div class="activity-date">8 de Septiembre</div>
+                        <div class="activity-title">👨‍🚀 Dinámica Presencial - Bogotá</div>
+                        <div class="activity-objective">Fomentar participación activa, ¿Conoces el Comité de Convivencia?, en compañía de un personaje animado por parte de la ARL</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Presencial</span>
+                            <span class="detail-badge">ARL</span>
+                            <span class="detail-badge">Participación activa</span>
+                        </div>
+                        <div class="responsible-badge">👤 Personaje ARL</div>
+                        <div class="city-badge">Bogotá</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Virtual" data-responsible="Jose David">
+                        <div class="activity-date">8 de Septiembre</div>
+                        <div class="activity-title">🤝 Taller de Resolución de Conflictos</div>
+                        <div class="activity-objective">Desarrollar herramientas para manejar y resolver conflictos de manera constructiva</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Metodología práctica</span>
+                            <span class="detail-badge">Casos reales</span>
+                            <span class="detail-badge">1 hora</span>
+                            <span class="detail-badge">Acompañamiento Psicóloga ARL</span>
+                        </div>
+                        <div class="responsible-badge">👤 Jose David</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Todas las Ciudades y Virtual" data-responsible="CoCoLab">
+                        <div class="activity-date">9 de Septiembre</div>
+                        <div class="activity-title">📚 Campaña "Libros que Nos Unen"</div>
+                        <div class="activity-objective">Intercambiar libros y experiencias de lectura para fortalecer vínculos</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Intercambio libre</span>
+                            <span class="detail-badge">Recomendaciones</span>
+                        </div>
+                        <div class="responsible-badge">👤 CoCoLab</div>
+                        <div class="city-badge">Todas las Ciudades y Virtual</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Medellín" data-responsible="Personaje ARL">
+                        <div class="activity-date">10 de Septiembre</div>
+                        <div class="activity-title">👨‍🚀 Dinámica Presencial - Medellín</div>
+                        <div class="activity-objective">Fomentar participación activa, ¿Conoces el Comité de Convivencia?, en compañía de un personaje animado por parte de la ARL</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Presencial</span>
+                            <span class="detail-badge">ARL</span>
+                            <span class="detail-badge">Participación activa</span>
+                        </div>
+                        <div class="responsible-badge">👤 Personaje ARL</div>
+                        <div class="city-badge">Medellín</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Virtual" data-responsible="Juan Camilo">
+                        <div class="activity-date">10 de Septiembre</div>
+                        <div class="activity-title">🎯 Juegos de Integración y Team Building</div>
+                        <div class="activity-objective">Fortalecer la cohesión grupal a través de actividades lúdicas y desafiantes</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Actividades dinámicas</span>
+                            <span class="detail-badge">Competencias sanas</span>
+                            <span class="detail-badge">1 hora</span>
+                            <span class="detail-badge">Acompañamiento Psicóloga ARL</span>
+                        </div>
+                        <div class="responsible-badge">👤 Juan Camilo</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Virtual" data-responsible="Sandra">
+                        <div class="activity-date">11 de Septiembre</div>
+                        <div class="activity-title">🎤 Conversatorio "Diversidad e Inclusión"</div>
+                        <div class="activity-objective">Promover la valoración de la diversidad como fortaleza organizacional</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Panel de expertos</span>
+                            <span class="detail-badge">Participación abierta</span>
+                            <span class="detail-badge">1 hora</span>
+                            <span class="detail-badge">Acompañamiento Psicóloga ARL</span>
+                        </div>
+                        <div class="responsible-badge">👤 Sandra</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Cali" data-responsible="Personaje ARL">
+                        <div class="activity-date">12 de Septiembre</div>
+                        <div class="activity-title">👨‍🚀 Dinámica Presencial - Cali</div>
+                        <div class="activity-objective">Fomentar participación activa, ¿Conoces el Comité de Convivencia?, en compañía de un personaje animado por parte de la ARL</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Presencial</span>
+                            <span class="detail-badge">ARL</span>
+                            <span class="detail-badge">Participación activa</span>
+                        </div>
+                        <div class="responsible-badge">👤 Personaje ARL</div>
+                        <div class="city-badge">Cali</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Virtual" data-responsible="CoCoLab">
+                        <div class="activity-date">12 de Septiembre</div>
+                        <div class="activity-title">🍽️ Almuerzo Compartido Intercultural</div>
+                        <div class="activity-objective">Celebrar la diversidad cultural a través de la gastronomía y el intercambio</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Platos típicos</span>
+                            <span class="detail-badge">Intercambio cultural</span>
+                        </div>
+                        <div class="responsible-badge">👤 CoCoLab</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEMANA 3 -->
+            <div class="week-section" data-week="week3">
+                <div class="week-header">
+                    Semana 3: Comunicación y Liderazgo (15-19 Septiembre)
+                </div>
+                <div class="activities-grid">
+                    <div class="activity-card" data-city="Barranquilla" data-responsible="Personaje ARL">
+                        <div class="activity-date">15 de Septiembre</div>
+                        <div class="activity-title">👨‍🚀 Dinámica Presencial - Barranquilla</div>
+                        <div class="activity-objective">Fomentar participación activa, ¿Conoces el Comité de Convivencia?, en compañía de un personaje animado por parte de la ARL</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Presencial</span>
+                            <span class="detail-badge">ARL</span>
+                            <span class="detail-badge">Participación activa</span>
+                        </div>
+                        <div class="responsible-badge">👤 Personaje ARL</div>
+                        <div class="city-badge">Barranquilla</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Virtual" data-responsible="Yira">
+                        <div class="activity-date">15 de Septiembre</div>
+                        <div class="activity-title">🗣️ Café con Líderes: Diálogo Abierto</div>
+                        <div class="activity-objective">Crear espacios de diálogo directo entre líderes y equipos</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Conversación informal</span>
+                            <span class="detail-badge">Feedback bidireccional</span>
+                        </div>
+                        <div class="responsible-badge">👤 Yira</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Virtual" data-responsible="Shirley">
+                        <div class="activity-date">16 de Septiembre</div>
+                        <div class="activity-title">📝 Taller de Feedback Constructivo</div>
+                        <div class="activity-objective">Desarrollar habilidades para dar y recibir retroalimentación efectiva</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Técnicas prácticas</span>
+                            <span class="detail-badge">Role playing</span>
+                            <span class="detail-badge">1 hora</span>
+                            <span class="detail-badge">Acompañamiento Psicóloga ARL</span>
+                        </div>
+                        <div class="responsible-badge">👤 Shirley</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Cartagena" data-responsible="Personaje ARL">
+                        <div class="activity-date">17 de Septiembre</div>
+                        <div class="activity-title">👨‍🚀 Dinámica Presencial - Cartagena</div>
+                        <div class="activity-objective">Fomentar participación activa, ¿Conoces el Comité de Convivencia?, en compañía de un personaje animado por parte de la ARL</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Presencial</span>
+                            <span class="detail-badge">ARL</span>
+                            <span class="detail-badge">Participación activa</span>
+                        </div>
+                        <div class="responsible-badge">👤 Personaje ARL</div>
+                        <div class="city-badge">Cartagena</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Virtual" data-responsible="Leonardo">
+                        <div class="activity-date">17 de Septiembre</div>
+                        <div class="activity-title">🎮 Escape Room Virtual "Convivencia Challenge"</div>
+                        <div class="activity-objective">Promover el trabajo en equipo y la resolución colaborativa de problemas</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Gamificación</span>
+                            <span class="detail-badge">Equipos mixtos</span>
+                            <span class="detail-badge">1 hora</span>
+                            <span class="detail-badge">Acompañamiento Psicóloga ARL</span>
+                        </div>
+                        <div class="responsible-badge">👤 Leonardo</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Virtual" data-responsible="Daidiana, Juan Ma, Laura">
+                        <div class="activity-date">18 de Septiembre</div>
+                        <div class="activity-title">🎪 Festival de Talentos</div>
+                        <div class="activity-objective">Conocer y valorar los talentos diversos de los colaboradores</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Presentaciones voluntarias</span>
+                            <span class="detail-badge">Reconocimiento</span>
+                            <span class="detail-badge">1 hora</span>
+                        </div>
+                        <div class="responsible-badge">👤 Daidiana</div>
+                        <div class="responsible-badge">👤 Juan Ma</div>
+                        <div class="responsible-badge">👤 Laura</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Pereira" data-responsible="Personaje ARL">
+                        <div class="activity-date">19 de Septiembre</div>
+                        <div class="activity-title">👨‍🚀 Dinámica Presencial - Pereira</div>
+                        <div class="activity-objective">Fomentar participación activa, ¿Conoces el Comité de Convivencia?, en compañía de un personaje animado por parte de la ARL</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Presencial</span>
+                            <span class="detail-badge">ARL</span>
+                            <span class="detail-badge">Participación activa</span>
+                        </div>
+                        <div class="responsible-badge">👤 Personaje ARL</div>
+                        <div class="city-badge">Pereira</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Todas las Ciudades y Virtual" data-responsible="CoCoLab">
+                        <div class="activity-date">19 de Septiembre</div>
+                        <div class="activity-title">📊 Pulso Mes de la Convivencia</div>
+                        <div class="activity-objective">Medir el impacto de las actividades y identificar áreas de mejora</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Evaluación online</span>
+                            <span class="detail-badge">Participación anónima</span>
+                        </div>
+                        <div class="responsible-badge">👤 CoCoLab</div>
+                        <div class="city-badge">Todas las Ciudades y Virtual</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEMANA 4 -->
+            <div class="week-section" data-week="week4">
+                <div class="week-header">
+                    Semana 4: Encuentros Virtuales de Convivencia (22-26 Septiembre)
+                </div>
+                <div class="activities-grid">
+                    <div class="activity-card" data-city="Virtual" data-responsible="Comité de Convivencia">
+                        <div class="activity-date">22 de Septiembre</div>
+                        <div class="activity-title">🎊 Encuentro Virtual de Convivencia - Área 1</div>
+                        <div class="activity-objective">Fortalecer lazos entre equipos y celebrar los logros del mes</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Dinámicas grupales</span>
+                            <span class="detail-badge">Reconocimientos</span>
+                        </div>
+                        <div class="responsible-badge">👤 Comité de Convivencia</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Virtual" data-responsible="Comité de Convivencia">
+                        <div class="activity-date">23 de Septiembre</div>
+                        <div class="activity-title">🎊 Encuentro Virtual de Convivencia - Área 2</div>
+                        <div class="activity-objective">Fortalecer lazos entre equipos y celebrar los logros del mes</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Dinámicas grupales</span>
+                            <span class="detail-badge">Reconocimientos</span>
+                        </div>
+                        <div class="responsible-badge">👤 Comité de Convivencia</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Virtual" data-responsible="Comité de Convivencia">
+                        <div class="activity-date">24 de Septiembre</div>
+                        <div class="activity-title">🎊 Encuentro Virtual de Convivencia - Área 3</div>
+                        <div class="activity-objective">Fortalecer lazos entre equipos y celebrar los logros del mes</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Dinámicas grupales</span>
+                            <span class="detail-badge">Reconocimientos</span>
+                        </div>
+                        <div class="responsible-badge">👤 Comité de Convivencia</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Virtual" data-responsible="Comité de Convivencia">
+                        <div class="activity-date">25 de Septiembre</div>
+                        <div class="activity-title">🎊 Encuentro Virtual de Convivencia - Área 4</div>
+                        <div class="activity-objective">Fortalecer lazos entre equipos y celebrar los logros del mes</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Dinámicas grupales</span>
+                            <span class="detail-badge">Reconocimientos</span>
+                        </div>
+                        <div class="responsible-badge">👤 Comité de Convivencia</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Virtual" data-responsible="Comité de Convivencia">
+                        <div class="activity-date">26 de Septiembre</div>
+                        <div class="activity-title">🎊 Encuentro Virtual de Convivencia - Área 5</div>
+                        <div class="activity-objective">Fortalecer lazos entre equipos y celebrar los logros del mes</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Dinámicas grupales</span>
+                            <span class="detail-badge">Reconocimientos</span>
+                        </div>
+                        <div class="responsible-badge">👤 Comité de Convivencia</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEMANA 5 -->
+            <div class="week-section" data-week="week5">
+                <div class="week-header">
+                    Semana 5: Evaluación y Cierre (29-30 Septiembre)
+                </div>
+                <div class="activities-grid">
+                    <div class="activity-card" data-city="Virtual" data-responsible="Comité de Convivencia">
+                        <div class="activity-date">29 de Septiembre</div>
+                        <div class="activity-title">📈 Evaluación Final del Mes de la Convivencia</div>
+                        <div class="activity-objective">Analizar resultados, impacto y aprendizajes del mes</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Análisis de datos</span>
+                            <span class="detail-badge">Retroalimentación</span>
+                        </div>
+                        <div class="responsible-badge">👤 Comité de Convivencia</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Todas las Ciudades y Virtual" data-responsible="Comité de Convivencia">
+                        <div class="activity-date">30 de Septiembre</div>
+                        <div class="activity-title">🏆 Cierre y Reconocimientos del Mes de la Convivencia</div>
+                        <div class="activity-objective">Celebrar los logros alcanzados y reconocer la participación activa</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Ceremonia virtual</span>
+                            <span class="detail-badge">Reconocimientos</span>
+                            <span class="detail-badge">Plan futuro</span>
+                        </div>
+                        <div class="responsible-badge">👤 Comité de Convivencia</div>
+                        <div class="city-badge">Todas las Ciudades y Virtual</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-section">
+            <h2>📊 Estadísticas del Cronograma</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalActivities">28</div>
+                    <div class="stat-label">Total de Actividades</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalCities">14</div>
+                    <div class="stat-label">Ciudades Participantes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalResponsibles">14</div>
+                    <div class="stat-label">Responsables Asignados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalWeeks">5</div>
+                    <div class="stat-label">Semanas de Actividades</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px; padding: 20px; background: rgba(255, 255, 255, 0.1); border-radius: 15px; backdrop-filter: blur(10px);">
+                <h3 style="margin-bottom: 15px; font-size: 1.2rem;">🌐 Cobertura Nacional e Internacional</h3>
+                <p style="margin-bottom: 10px; font-size: 1rem; opacity: 0.9;">
+                    <strong>6 Ciudades Presenciales:</strong> Bogotá, Medellín, Cali, Barranquilla, Cartagena, Pereira
+                </p>
+                <p style="font-size: 1rem; opacity: 0.9;">
+                    <strong>8 Ciudades Virtuales:</strong> Ecuador, Lima, Montería, Pasto, San Andrés, Santa Marta, Santanderes, Sincelejo
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función de filtrado
+        function filterActivities() {
+            const cityFilter = document.getElementById('cityFilter').value;
+            const weekFilter = document.getElementById('weekFilter').value;
+            const responsibleFilter = document.getElementById('responsibleFilter').value;
+            
+            const weekSections = document.querySelectorAll('.week-section');
+            const activityCards = document.querySelectorAll('.activity-card');
+            
+            let visibleActivities = 0;
+            let visibleCities = new Set();
+            let visibleResponsibles = new Set();
+            let visibleWeeks = 0;
+            
+            // Mostrar/ocultar secciones de semana
+            weekSections.forEach(section => {
+                const weekData = section.getAttribute('data-week');
+                if (weekFilter === '' || weekData === weekFilter) {
+                    section.style.display = 'block';
+                    
+                    // Verificar si tiene actividades visibles
+                    const cardsInWeek = section.querySelectorAll('.activity-card');
+                    let hasVisibleCards = false;
+                    
+                    cardsInWeek.forEach(card => {
+                        const cardCity = card.getAttribute('data-city');
+                        const cardResponsible = card.getAttribute('data-responsible');
+                        
+                        const cityMatch = cityFilter === '' || cardCity === cityFilter;
+                        // Mejorar la búsqueda de responsables para manejar múltiples responsables
+                        const responsibleMatch = responsibleFilter === '' || cardResponsible.includes(responsibleFilter);
+                        
+                        if (cityMatch && responsibleMatch) {
+                            card.style.display = 'block';
+                            hasVisibleCards = true;
+                            visibleActivities++;
+                            visibleCities.add(cardCity);
+                            // Agregar todos los responsables de esta tarjeta
+                            cardResponsible.split(', ').forEach(resp => visibleResponsibles.add(resp.trim()));
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                    
+                    if (hasVisibleCards) {
+                        visibleWeeks++;
+                    } else {
+                        section.style.display = 'none';
+                    }
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+            
+            // Actualizar estadísticas
+            document.getElementById('totalActivities').textContent = visibleActivities;
+            document.getElementById('totalCities').textContent = 14; // Siempre 14 ciudades (6 presenciales + 8 virtuales)
+            document.getElementById('totalResponsibles').textContent = visibleResponsibles.size;
+            document.getElementById('totalWeeks').textContent = visibleWeeks;
+        }
+        
+        // Event listeners para filtros
+        document.getElementById('cityFilter').addEventListener('change', filterActivities);
+        document.getElementById('weekFilter').addEventListener('change', filterActivities);
+        document.getElementById('responsibleFilter').addEventListener('change', filterActivities);
+        
+        // Función para exportar a Excel
+        function exportToExcel() {
+            const data = [];
+            const activityCards = document.querySelectorAll('.activity-card:not([style*="display: none"])');
+            
+            // Encabezados
+            data.push(['Fecha', 'Actividad', 'Objetivo', 'Ubicación', 'Responsable', 'Semana']);
+            
+            activityCards.forEach(card => {
+                const date = card.querySelector('.activity-date').textContent;
+                const title = card.querySelector('.activity-title').textContent;
+                const objective = card.querySelector('.activity-objective').textContent;
+                const city = card.getAttribute('data-city');
+                const responsible = card.getAttribute('data-responsible');
+                
+                // Determinar semana basada en la sección padre
+                const weekSection = card.closest('.week-section');
+                const weekHeader = weekSection.querySelector('.week-header').textContent;
+                
+                data.push([date, title, objective, city, responsible, weekHeader]);
+            });
+            
+            // Crear workbook y worksheet
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(data);
+            
+            // Ajustar ancho de columnas
+            ws['!cols'] = [
+                { width: 15 }, // Fecha
+                { width: 50 }, // Actividad
+                { width: 60 }, // Objetivo
+                { width: 25 }, // Ubicación
+                { width: 20 }, // Responsable
+                { width: 40 }  // Semana
+            ];
+            
+            XLSX.utils.book_append_sheet(wb, ws, 'Cronograma Convivencia');
+            
+            // Descargar archivo
+            XLSX.writeFile(wb, 'Cronograma_Mes_Convivencia_Septiembre_2025.xlsx');
+        }
+        
+        // Inicializar filtros
+        filterActivities();
+    </script>
+</body>
+</html>
