@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta Estratégica - Comité de Convivencia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: none;
+            padding: 60px;
+            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .slide-header {
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        .slide-title {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .slide-subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            font-weight: 300;
+        }
+
+        .slide-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #34495e;
+            margin: 30px 0 20px 0;
+            font-weight: 600;
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
+        }
+
+        .subsection-title {
+            font-size: 1.4rem;
+            color: #2980b9;
+            margin: 25px 0 15px 0;
+            font-weight: 600;
+        }
+
+        .content-block {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .list-item {
+            margin: 12px 0;
+            padding-left: 20px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .list-item:before {
+            content: "▶";
+            color: #667eea;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .benefit-item {
+            background: #e8f5e8;
+            border-left: 4px solid #27ae60;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(255,255,255,0.9);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: #2c3e50;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .cover-slide {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cover-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .cover-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .cover-info {
+            font-size: 1.2rem;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        .agenda-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .agenda-item {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .agenda-item:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .agenda-number {
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 0 auto 15px auto;
+        }
+
+        .moderator-info {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+            color: #856404;
+        }
+
+        .law-highlight {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #17a2b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Portada -->
+        <div class="slide active cover-slide">
+            <h1 class="cover-title">PROPUESTA ESTRATÉGICA</h1>
+            <h2 class="cover-subtitle">Comité de Convivencia SIESA</h2>
+            <div class="cover-info">
+                <p>Reunión con Dirección de Recursos Humanos</p>
+                <p>Directora: Yira</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Agenda -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Agenda de la Reunión</h1>
+                <p class="slide-subtitle">Puntos estratégicos para fortalecer el bienestar organizacional</p>
+            </div>
+            <div class="slide-content">
+                <div class="agenda-grid">
+                    <div class="agenda-item" onclick="goToSlide(2)">
+                        <div class="agenda-number">1</div>
+                        <h3>Programa de Evaluación Ergonómica</h3>
+                        <p>Formalización y optimización de protocolos</p>
+                        <div class="moderator-info">Moderador sugerido: Shirley</div>
+                    </div>
+                    <div class="agenda-item" onclick="goToSlide(5)">
+                        <div class="agenda-number">2</div>
+                        <h3>Gestión del Cambio Organizacional</h3>
+                        <p>Sistema integral de acompañamiento</p>
+                        <div class="moderator-info">Moderador sugerido: Sandra o José David</div>
+                    </div>
+                    <div class="agenda-item" onclick="goToSlide(8)">
+                        <div class="agenda-number">3</div>
+                        <h3>Reforma Laboral 2025</h3>
+                        <p>Socialización Ley 2466 de 2025</p>
+                        <div class="moderator-info">Moderador sugerido: Juan Manuel</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Punto 1 - Introducción -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Punto 1: Evaluación Ergonómica</h1>
+                <p class="slide-subtitle">Fortalecimiento del Programa</p>
+            </div>
+            <div class="slide-content">
+                <div class="highlight-box">
+                    <h2>Contexto Actual</h2>
+                    <p>Reconocemos el trabajo realizado por SIESA en las evaluaciones ergonómicas con apoyo de ARL Colmena, especialmente en la renovación nacional de silletería y las mejoras implementadas según diagnósticos especializados.</p>
+                </div>
+                
+                <div class="content-block">
+                    <h2 class="section-title">Objetivo</h2>
+                    <p><strong>Formalizar un protocolo diferenciado que optimice recursos y mejore la experiencia del colaborador según su modalidad de trabajo.</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Punto 1 - Estrategia Propuesta -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Estrategia Propuesta</h1>
+                <p class="slide-subtitle">Protocolo diferenciado por modalidad de trabajo</p>
+            </div>
+            <div class="slide-content">
+                <div class="section-title">Para colaboradores presenciales:</div>
+                <div class="content-block">
+                    <div class="list-item">Mantener el protocolo actual con ARL Colmena</div>
+                    <div class="list-item">Evaluaciones y mejoras del puesto de trabajo en oficina</div>
+                </div>
+
+                <div class="section-title">Para colaboradores en teletrabajo permanente:</div>
+                <div class="content-block">
+                    <div class="list-item">Visita de verificación ergonómica por parte de ARL</div>
+                    <div class="list-item">Certificación de idoneidad ergonómica</div>
+                    <div class="list-item">Lineamientos claros para mantenimiento de estándares</div>
+                </div>
+
+                <div class="section-title">Beneficios Esperados:</div>
+                <div class="benefit-item">✓ Reducción de incidentes ergonómicos</div>
+                <div class="benefit-item">✓ Optimización de recursos de ARL</div>
+                <div class="benefit-item">✓ Mayor satisfacción y productividad del colaborador</div>
+                <div class="benefit-item">✓ Claridad normativa en modalidades de trabajo</div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Punto 2 - Introducción -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Punto 2: Gestión del Cambio</h1>
+                <p class="slide-subtitle">Sistema Integral de Gestión del Cambio Organizacional</p>
+            </div>
+            <div class="slide-content">
+                <div class="highlight-box">
+                    <h2>Justificación</h2>
+                    <p>Los procesos de cambio organizacional requieren un abordaje estructurado que proteja el bienestar del colaborador y garantice la efectividad de la transición.</p>
+                </div>
+                
+                <div class="content-block">
+                    <h2 class="section-title">Componentes del Sistema</h2>
+                    <div class="list-item">Protocolo para cambios de cargo</div>
+                    <div class="list-item">Fortalecimiento de capacidades directivas</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Punto 2 - Protocolo Cambios de Cargo -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Protocolo para Cambios de Cargo</h1>
+                <p class="slide-subtitle">Componentes esenciales del proceso</p>
+            </div>
+            <div class="slide-content">
+                <div class="subsection-title">🗓️ Comunicación Anticipada</div>
+                <div class="content-block">
+                    <p>Notificación mínimo 30 días calendario antes del cambio</p>
+                </div>
+
+                <div class="subsection-title">📚 Plan de Capacitación</div>
+                <div class="content-block">
+                    <p>Programa obligatorio y progresivo adaptado al nuevo rol</p>
+                </div>
+
+                <div class="subsection-title">🤝 Acompañamiento Preventivo</div>
+                <div class="content-block">
+                    <p>Soporte psicológico especializado durante la transición</p>
+                </div>
+
+                <div class="subsection-title">📊 Evaluación de Impacto</div>
+                <div class="content-block">
+                    <p>Seguimiento del bienestar y adaptación del colaborador</p>
+                </div>
+
+                <div class="subsection-title">🔄 Alternativas de Reubicación</div>
+                <div class="content-block">
+                    <p>Análisis de opciones cuando sea procedente según política organizacional</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Punto 2 - Capacidades Directivas -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Fortalecimiento Directivo</h1>
+                <p class="slide-subtitle">Capacidades para la gestión del cambio</p>
+            </div>
+            <div class="slide-content">
+                <div class="section-title">Líneas de Acción:</div>
+                <div class="content-block">
+                    <div class="list-item">Entrenamiento en comunicación asertiva para líderes</div>
+                    <div class="list-item">Implementación de metodología Change Management certificada</div>
+                    <div class="list-item">Creación de protocolos de escalamiento temprano</div>
+                    <div class="list-item">Desarrollo de herramientas de diagnóstico y seguimiento</div>
+                </div>
+
+                <div class="section-title">Resultados Esperados:</div>
+                <div class="benefit-item">✓ Reducción del impacto negativo en el clima laboral</div>
+                <div class="benefit-item">✓ Mejor adaptación de los colaboradores a nuevos roles</div>
+                <div class="benefit-item">✓ Fortalecimiento del liderazgo organizacional</div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Punto 3 - Introducción Reforma -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Punto 3: Reforma Laboral 2025</h1>
+                <p class="slide-subtitle">Socialización e Implementación - Ley 2466 de 2025</p>
+            </div>
+            <div class="slide-content">
+                <div class="law-highlight">
+                    <h2>📋 Contexto Normativo</h2>
+                    <p><strong>La Ley 2466 de 2025, sancionada el 25 de junio</strong>, introduce modificaciones significativas en el marco laboral colombiano que requieren comunicación oportuna y clara a todos los colaboradores.</p>
+                </div>
+                
+                <div class="content-block">
+                    <h2 class="section-title">Áreas de Impacto Principal</h2>
+                    <div class="list-item">Modificaciones en jornadas y recargos</div>
+                    <div class="list-item">Derechos y beneficios ampliados</div>
+                    <div class="list-item">Nuevas modalidades de contratación</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Punto 3 - Jornadas y Recargos -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Jornadas y Recargos</h1>
+                <p class="slide-subtitle">Cambios en horarios y compensaciones</p>
+            </div>
+            <div class="slide-content">
+                <div class="subsection-title">🌙 Jornada Nocturna</div>
+                <div class="law-highlight">
+                    <p><strong>Nueva definición:</strong> 7:00 PM a 6:00 AM</p>
+                    <p><strong>Vigente desde:</strong> 25 de diciembre de 2025</p>
+                </div>
+
+                <div class="subsection-title">📅 Recargo Dominical</div>
+                <div class="law-highlight">
+                    <p><strong>Incremento gradual:</strong> del 75% actual al 100%</p>
+                    <p><strong>Implementación completa:</strong> julio 2027</p>
+                </div>
+
+                <div class="subsection-title">⏰ Horas Extras</div>
+                <div class="law-highlight">
+                    <p><strong>Cambio:</strong> Eliminación del requisito de autorización previa al Ministerio de Trabajo</p>
+                    <p><strong>Requisito:</strong> Registro detallado obligatorio</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Punto 3 - Derechos Ampliados -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Derechos y Beneficios</h1>
+                <p class="slide-subtitle">Ampliación de garantías laborales</p>
+            </div>
+            <div class="slide-content">
+                <div class="subsection-title">📋 Permisos Remunerados</div>
+                <div class="content-block">
+                    <p>Nuevas modalidades y condiciones más favorables para el colaborador</p>
+                </div>
+
+                <div class="subsection-title">💻 Teletrabajo</div>
+                <div class="content-block">
+                    <p><strong>Auxilio de conectividad permanente</strong> para colaboradores que devenguen menos de 2 SMMLV</p>
+                    <p><em>Este beneficio reemplaza el auxilio de transporte</em></p>
+                </div>
+
+                <div class="subsection-title">🛡️ Protección Laboral</div>
+                <div class="content-block">
+                    <p>Fortalecimiento de mecanismos contra discriminación y acoso laboral</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Punto 3 - Modalidades Contratación -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Modalidades de Contratación</h1>
+                <p class="slide-subtitle">Nuevas reglas contractuales</p>
+            </div>
+            <div class="slide-content">
+                <div class="subsection-title">📄 Contratos a Término Fijo</div>
+                <div class="content-block">
+                    <p><strong>Duración máxima ampliada:</strong> de 3 a 4 años</p>
+                    <p>Después se convierte automáticamente en indefinido</p>
+                </div>
+
+                <div class="subsection-title">🔨 Contratos por Obra</div>
+                <div class="content-block">
+                    <p><strong>Obligatoriedad:</strong> Formalización escrita</p>
+                    <p>Especificación clara del objeto del contrato</p>
+                </div>
+
+                <div class="subsection-title">🎓 Aprendices SENA</div>
+                <div class="content-block">
+                    <p><strong>Etapa lectiva:</strong> 75% de 1 SMMLV</p>
+                    <p><strong>Etapa práctica:</strong> 100% de 1 SMMLV</p>
+                    <p>Afiliación completa a seguridad social</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Estrategia de Comunicación -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Estrategia de Comunicación</h1>
+                <p class="slide-subtitle">Plan de socialización de la reforma</p>
+            </div>
+            <div class="slide-content">
+                <div class="section-title">Estrategia Recomendada:</div>
+                
+                <div class="content-block">
+                    <div class="subsection-title">📊 Sesiones Informativas</div>
+                    <p>Por áreas, dirigidas por Recursos Humanos</p>
+                </div>
+
+                <div class="content-block">
+                    <div class="subsection-title">📚 Material Didáctico</div>
+                    <p>Con casos prácticos y ejemplos aplicables</p>
+                </div>
+
+                <div class="content-block">
+                    <div class="subsection-title">❓ Canal de Consultas</div>
+                    <p>Para resolver dudas específicas de colaboradores</p>
+                </div>
+
+                <div class="content-block">
+                    <div class="subsection-title">📅 Cronograma Claro</div>
+                    <p>De implementación comunicado a toda la organización</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Consideraciones Finales -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Consideraciones Finales</h1>
+                <p class="slide-subtitle">Solicitudes y próximos pasos</p>
+            </div>
+            <div class="slide-content">
+                <div class="highlight-box">
+                    <h2>Objetivo General</h2>
+                    <p>Estas propuestas buscan fortalecer el bienestar organizacional, garantizar el cumplimiento normativo y optimizar la gestión del talento humano en SIESA.</p>
+                </div>
+
+                <div class="section-title">Solicitud al área de Recursos Humanos:</div>
+                <div class="content-block">
+                    <div class="list-item">Evaluación de viabilidad de implementación</div>
+                    <div class="list-item">Definición de cronograma de ejecución</div>
+                    <div class="list-item">Asignación de recursos necesarios</div>
+                    <div class="list-item">Establecimiento de indicadores de seguimiento</div>
+                </div>
+
+                <div class="section-title">Próximos Pasos Sugeridos:</div>
+                <div class="benefit-item">1. Revisión y ajuste de propuestas según retroalimentación</div>
+                <div class="benefit-item">2. Elaboración de plan de implementación detallado</div>
+                <div class="benefit-item">3. Definición de responsables y tiempos</div>
+                <div class="benefit-item">4. Establecimiento de sistema de monitoreo y evaluación</div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Consulta Adicional -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Consulta Adicional</h1>
+                <p class="slide-subtitle">Tema para consideración y retroalimentación</p>
+            </div>
+            <div class="slide-content">
+                <div class="highlight-box">
+                    <h2>💡 Consulta al área de Recursos Humanos</h2>
+                    <p>Nos gustaría conocer la perspectiva de la Dirección sobre el siguiente tema:</p>
+                </div>
+                
+                <div class="content-block">
+                    <h2 class="section-title">🎉 Eventos Corporativos e Inclusión por Modalidad de Trabajo</h2>
+                    <p><strong>Contexto:</strong> Considerando que tenemos colaboradores en diferentes modalidades (presencial, teletrabajo, híbrido), nos gustaría consultar:</p>
+                    
+                    <div class="list-item">¿Cuál es la política actual de la empresa para eventos corporativos como fiestas de fin de año?</div>
+                    <div class="list-item">¿Cómo se garantiza la participación equitativa de teletrabajadores en estos eventos?</div>
+                    <div class="list-item">¿Existen consideraciones especiales o alternativas para colaboradores remotos?</div>
+                </div>
+
+                <div class="law-highlight">
+                    <h3>🎯 Objetivo de la consulta</h3>
+                    <p>Entender las buenas prácticas actuales de SIESA para promover la inclusión y equidad entre todas las modalidades de trabajo, especialmente en eventos de integración y bienestar organizacional.</p>
+                </div>
+
+                <div class="content-block">
+                    <h3 class="subsection-title">💭 Nos interesa especialmente conocer:</h3>
+                    <div class="benefit-item">✓ Experiencias previas en eventos híbridos o virtuales</div>
+                    <div class="benefit-item">✓ Percepciones de colaboradores en diferentes modalidades</div>
+                    <div class="benefit-item">✓ Oportunidades de mejora identificadas</div>
+                    <div class="benefit-item">✓ Visión futura para la inclusión en eventos corporativos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: Cierre -->
+        <div class="slide cover-slide">
+            <h1 class="cover-title">¡Gracias!</h1>
+            <h2 class="cover-subtitle">Comité de Convivencia SIESA</h2>
+            <div class="cover-info">
+                <p>Esperamos sus comentarios y retroalimentación</p>
+                <p>🤝 Trabajemos juntos por el bienestar organizacional</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-counter">
+        <span id="current-slide">1</span> / <span id="total-slides">15</span>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prev-btn" onclick="previousSlide()" disabled>← Anterior</button>
+        <button class="nav-btn" id="next-btn" onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = n;
+            
+            if (currentSlide >= totalSlides) currentSlide = 0;
+            if (currentSlide < 0) currentSlide = totalSlides - 1;
+            
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+            
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = currentSlide === 0;
+            document.getElementById('next-btn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        function goToSlide(n) {
+            showSlide(n);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
