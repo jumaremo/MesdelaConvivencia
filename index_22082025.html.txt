@@ -375,7 +375,7 @@
                     </div>
                     
                     <div class="activity-card" data-city="Virtual" data-responsible="CoCoLab">
-                        <div class="activity-date">5 de Septiembre</div>
+                        <div class="activity-date">3 de Septiembre</div>
                         <div class="activity-title">🎨 Mural Colaborativo "Nuestra Convivencia"</div>
                         <div class="activity-objective">Crear un espacio artístico donde todos puedan expresar su visión de la convivencia</div>
                         <div class="activity-details">
@@ -383,6 +383,18 @@
                             <span class="detail-badge">Participación libre</span>
                         </div>
                         <div class="responsible-badge">👤 CoCoLab</div>
+                        <div class="city-badge">Virtual</div>
+                    </div>
+                    
+                    <div class="activity-card" data-city="Virtual" data-responsible="Laura">
+                        <div class="activity-date">5 de Septiembre</div>
+                        <div class="activity-title">🌱 Jornada de Bienestar y Mindfulness</div>
+                        <div class="activity-objective">Promover el bienestar mental y técnicas de relajación en el entorno laboral</div>
+                        <div class="activity-details">
+                            <span class="detail-badge">Instructor certificado</span>
+                            <span class="detail-badge">Actividad grupal</span>
+                        </div>
+                        <div class="responsible-badge">👤 Laura</div>
                         <div class="city-badge">Virtual</div>
                     </div>
                 </div>
@@ -395,14 +407,13 @@
                 </div>
                 <div class="activities-grid">
                     <div class="activity-card" data-city="Bogotá" data-responsible="Personaje ARL">
-                        <div class="activity-date">8 de Septiembre</div>
+                        <div class="activity-date">9 de Septiembre</div>
                         <div class="activity-title">👨‍🚀 Dinámica Presencial - Bogotá</div>
                         <div class="activity-objective">Fomentar participación activa, ¿Conoces el Comité de Convivencia?, en compañía de un personaje animado por parte de la ARL</div>
                         <div class="activity-details">
                             <span class="detail-badge">Presencial</span>
                             <span class="detail-badge">ARL</span>
                             <span class="detail-badge">Participación activa</span>
-                            <span class="detail-badge">8:00 AM - 10:00 AM</span>
                         </div>
                         <div class="responsible-badge">👤 Personaje ARL</div>
                         <div class="city-badge">Bogotá</div>
@@ -416,21 +427,19 @@
                             <span class="detail-badge">Presencial</span>
                             <span class="detail-badge">ARL</span>
                             <span class="detail-badge">Participación activa</span>
-                            <span class="detail-badge">8:00 AM - 10:00 AM</span>
                         </div>
                         <div class="responsible-badge">👤 Personaje ARL</div>
                         <div class="city-badge">Medellín</div>
                     </div>
                     
                     <div class="activity-card" data-city="Cali" data-responsible="Personaje ARL">
-                        <div class="activity-date">12 de Septiembre</div>
+                        <div class="activity-date">11 de Septiembre</div>
                         <div class="activity-title">👨‍🚀 Dinámica Presencial - Cali</div>
                         <div class="activity-objective">Fomentar participación activa, ¿Conoces el Comité de Convivencia?, en compañía de un personaje animado por parte de la ARL</div>
                         <div class="activity-details">
                             <span class="detail-badge">Presencial</span>
                             <span class="detail-badge">ARL</span>
                             <span class="detail-badge">Participación activa</span>
-                            <span class="detail-badge">8:00 AM - 10:00 AM</span>
                         </div>
                         <div class="responsible-badge">👤 Personaje ARL</div>
                         <div class="city-badge">Cali</div>
@@ -477,21 +486,19 @@
                             <span class="detail-badge">Presencial</span>
                             <span class="detail-badge">ARL</span>
                             <span class="detail-badge">Participación activa</span>
-                            <span class="detail-badge">8:00 AM - 10:00 AM</span>
                         </div>
                         <div class="responsible-badge">👤 Personaje ARL</div>
                         <div class="city-badge">Cartagena</div>
                     </div>
                     
                     <div class="activity-card" data-city="Barranquilla" data-responsible="Personaje ARL">
-                        <div class="activity-date">15 de Septiembre</div>
+                        <div class="activity-date">18 de Septiembre</div>
                         <div class="activity-title">👨‍🚀 Dinámica Presencial - Barranquilla</div>
                         <div class="activity-objective">Fomentar participación activa, ¿Conoces el Comité de Convivencia?, en compañía de un personaje animado por parte de la ARL</div>
                         <div class="activity-details">
                             <span class="detail-badge">Presencial</span>
                             <span class="detail-badge">ARL</span>
                             <span class="detail-badge">Participación activa</span>
-                            <span class="detail-badge">8:00 AM - 10:00 AM</span>
                         </div>
                         <div class="responsible-badge">👤 Personaje ARL</div>
                         <div class="city-badge">Barranquilla</div>
@@ -505,7 +512,6 @@
                             <span class="detail-badge">Presencial</span>
                             <span class="detail-badge">ARL</span>
                             <span class="detail-badge">Participación activa</span>
-                            <span class="detail-badge">8:00 AM - 10:00 AM</span>
                         </div>
                         <div class="responsible-badge">👤 Personaje ARL</div>
                         <div class="city-badge">Pereira</div>
@@ -677,18 +683,6 @@
                             <span class="detail-badge">1 hora</span>
                         </div>
                         <div class="responsible-badge">👤 Leonardo</div>
-                        <div class="city-badge">Virtual</div>
-                    </div>
-                    
-                    <div class="activity-card" data-city="Virtual" data-responsible="Laura">
-                        <div class="activity-date">Octubre</div>
-                        <div class="activity-title">🌱 Jornada de Bienestar y Mindfulness</div>
-                        <div class="activity-objective">Promover el bienestar mental y técnicas de relajación en el entorno laboral</div>
-                        <div class="activity-details">
-                            <span class="detail-badge">Instructor certificado</span>
-                            <span class="detail-badge">Actividad grupal</span>
-                        </div>
-                        <div class="responsible-badge">👤 Laura</div>
                         <div class="city-badge">Virtual</div>
                     </div>
                 </div>
